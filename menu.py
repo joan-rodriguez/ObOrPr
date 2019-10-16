@@ -58,7 +58,7 @@ Notebook Menu
     def modify_note(self):
         id = input("Enter a note id: ")
         memo = input("Enter a memo: ")
-        tags = input ("Enter tags: ")
+        tags = input("Enter tags: ")
         if memo:
             self.notebook.modify_memo(id, memo)
         if tags:
@@ -67,6 +67,7 @@ Notebook Menu
     def quit(self):
         print("Thank you for using your notebook today.")
         sys.exit(0)
+
 
 if __name__ == "__main__":
     Menu().run()

@@ -1,15 +1,38 @@
 """This is a class example to understand the basic concepts."""
+import random
 
 
 class Car:
     """This is the car class."""
 
-    def __init__(self, key, wheels, seats, combustible, tank_level):
-        self.key = key
-        self.wheels = wheels
-        self.seats = seats
-        self.combustible = combustible
-        self.tank_level = tank_level
+    def __init__(self):
+        self.key = None
+        self.wheels = self.check_wheels()
+        self.seats = 5
+        self.tank_level = random.randrange(0, 100)
+
+    def check_wheels(self,):
+        wheels = input('Sir, how many wheels would you like your car to have? Ask and \n'
+                       'you will be provided!')
+
+        while True:
+            if wheels > str(4):
+                wheels = input('Sir, you may want to ask for a Truck instead of a \n'
+                               'car... Now, how many wheels do you want your CAR \n'
+                               'to have? --> ')
+            elif wheels < str(4):
+                wheels = input('Sir, you may want to ask for a Motorbike instead of \n'
+                                   'a car... Now, how many wheels do you want your \n'
+                                   'CAR to have? --> ')
+            elif wheels == str(4):
+                print('Great, Sir! Your 4 wheels are ready to spin!')
+                break
+
+            else:
+                wheels = input('Sir, we can be here aaaaall day... But I have cars \n'
+                               'to sell and you might have other people to piss off...')
+
+        return int(wheels)
 
     def move(self):
 
@@ -17,6 +40,22 @@ class Car:
     def flat_tire(self):
 
 
+class Key:
+    """This is the key class. You will need it to turn your car on."""
+
+    def __init__(self):
+        self.key = self.build_it()
+
+    def build_it(self):
+        order = input("Go ahead and build your key (...pressing enter) --> ")
+        print("-------------------------------------------\n"
+              "The metal those dwarfs gave you in the beginning of time is getting \n"
+              "importance right now, right in this place.\n"
+              "You are the one who knows how to melt it and how to give it form and \n"
+              "properties. The clinging sound of your small hammer is heard in the \n"
+              "whole parking lot for the most part of an hour.\n"
+              "Finally, the KEY is ready to be used! \n"
+              "------------------------------------------")
 
 class Manager:
     """This class manages the options."""

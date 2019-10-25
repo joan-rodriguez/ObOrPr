@@ -6,38 +6,62 @@ class Car:
     """This is the car class."""
 
     def __init__(self):
+        self.name = 'C4R-'+str(1)
         self.key = None
         self.wheels = self.check_wheels()
         self.seats = 5
         self.tank_level = random.randrange(0, 100)
 
-    def check_wheels(self,):
-        wheels = input('Sir, how many wheels would you like your car to have? Ask and \n'
-                       'you will be provided!')
+        self.introduction()
+
+    @staticmethod
+    def check_wheels():
+        wheels = input('\nSir, how many wheels would you like your car to have? Ask and \n'
+                       'you will be provided! --> ')
+
+        error_text = '\nSir, we can be here aaaaall day... But I have cars \n' \
+                     'to sell and you might have other people to piss off...\n' \
+                     'Now, how many wheels do you want your car to have? --> '
 
         while True:
-            if wheels > str(4):
-                wheels = input('Sir, you may want to ask for a Truck instead of a \n'
-                               'car... Now, how many wheels do you want your CAR \n'
-                               'to have? --> ')
-            elif wheels < str(4):
-                wheels = input('Sir, you may want to ask for a Motorbike instead of \n'
+            try:
+                if int(wheels) > 4:
+                    wheels = input('\nSir, you may want to ask for a Truck instead of a \n'
+                                   'car... Now, how many wheels do you want your CAR \n'
+                                   'to have? --> ')
+                elif int(wheels) == 1:
+                    wheels = input('\nSir, you may want to ask for a monocycle... Now, how \n'
+                                   'many wheels do you want your CAR to have? --> ')
+                elif 4 > int(wheels) > 1:
+                    wheels = input('\nSir, you may want to ask for a Motorbike instead of \n'
                                    'a car... Now, how many wheels do you want your \n'
                                    'CAR to have? --> ')
-            elif wheels == str(4):
-                print('Great, Sir! Your 4 wheels are ready to spin!')
-                break
+                elif int(wheels) == 4:
+                    print('\nGreat, Sir! Your 4 wheels are ready to spin!')
+                    break
 
-            else:
-                wheels = input('Sir, we can be here aaaaall day... But I have cars \n'
-                               'to sell and you might have other people to piss off...')
+                else:
+                    wheels = input(error_text)
+
+            except ValueError:
+                wheels = input(error_text)
 
         return int(wheels)
 
-    def move(self):
+    def introduction(self):
+        print('\nSir, I am pleased to introduce you to your car: {0}.\n'
+              'You may like to know that your car has {1} wheels, \n'
+              '{2} seats and your tank comes with a {3}% level already filled, \n'
+              'Sir. It is on the house :)\n\nNow go and feel the joy of driving!'
+              .format(self.name, self.wheels, self.seats, self.tank_level))
 
+    @staticmethod
+    def movement():
+        print('Move forward. Always.')
 
-    def flat_tire(self):
+    @staticmethod
+    def flat_tire():
+        print('Your tire is flat man.')
 
 
 class Key:
@@ -46,7 +70,7 @@ class Key:
     def __init__(self):
         self.key = self.build_it()
 
-    def build_it(self):
+    def build_it():
         order = input("Go ahead and build your key (...pressing enter) --> ")
         print("-------------------------------------------\n"
               "The metal those dwarfs gave you in the beginning of time is getting \n"
@@ -57,22 +81,32 @@ class Key:
               "Finally, the KEY is ready to be used! \n"
               "------------------------------------------")
 
+
 class Manager:
     """This class manages the options."""
 
     def __init__(self):
-        self.car = Car()
+        self.welcome()
+
         self.choices = {
             "1": self.start_engine,
             "2": self.ride,
             "3": self.check_tank,
             "4": self.check_wheels,
-            "5": self.pickup,
-            "6": self.leave,
+            "5": self.pickup_passenger,
+            "6": self.leave_passenger,
             "7": self.bike
         }
 
-    def display_menu(self):
+        self.run()
+
+    @staticmethod
+    def welcome():
+        print('Dear guest! We are pleased to welcome you to the\n'
+              '------------> Ultimate Cars Fair!!! <------------')
+
+    @staticmethod
+    def display_menu():
         print(
             """
 
@@ -87,7 +121,6 @@ Driver options:
 
 7. Be healthy. Leave the car. Take the bike.
 ----------------------------------------------
-
 """
         )
 
@@ -95,26 +128,49 @@ Driver options:
         """Display menu and respond choices."""
         while True:
             self.display_menu()
-            choice = input("You are the driver. You rule. Take an option: ")
+            choice = input('\nYou are the driver. You rule. Take an option: --> ')
             action = self.choices.get(choice)
             if action:
                 action()
             else:
-                print("{0} is not a valid choice.".format(choice))
+                print('{0} is not a valid choice.'.format(choice))
 
     def start_engine(self):
+        self.car = Car()
+        print('\n----> Engine started.')
 
+    @staticmethod
+    def ride():
+        print('\n----> You are riding. Like a Pro.')
 
-    def ride(self):
+    @staticmethod
+    def check_tank():
+        print('\n----> There it is! The tank!')
 
-    def refill(self):
+    @staticmethod
+    def check_wheels():
+        print('\n----> There are still 4 wheels.')
 
-    def pickup_passenger(self):
+    @staticmethod
+    def change_wheel():
+        print('\n----> You change wheel 1 for wheel 3.')
 
-    def leave_passenger(self):
+    @staticmethod
+    def pickup_passenger():
+        print('\n----> Wow! It\'s heavy!')
 
-    def change_wheel(self):
+    @staticmethod
+    def leave_passenger():
+        print('\n----> Left. Or was it right?')
+
+    @staticmethod
+    def refill():
+        print('\n----> Refilled with sparkling water.')
+
+    @staticmethod
+    def bike():
+        print('\n----> See blue anus.')
 
 
 if __name__ == "__main__":
-    Manager().run()
+    Manager()

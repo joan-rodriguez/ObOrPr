@@ -74,31 +74,45 @@ class Car:
                       'in store. Until then...')
 
     def show_status(self):
-        print('='*20, """
-        --> YOUR CAR STATUS <--""", '='*20, """
-        Color: {}
-        Tank level: {}liters
-        Distance: {}km""".format(self.color, self.tank, self.distance), '='*20)
+        print("""
+=============================
+   --> YOUR CAR STATUS <--
+=============================
+Color: {}
+Tank level: {}liters
+Distance: {}km
+=============================
+""".format(self.color, self.tank, self.distance))
 
 
 class Manager:
     def __init__(self):
         car = Car()
         print('Wow! What a brand new car you have there!!\n')
-        self.menu(car)
+        self.menu()
 
-    def menu(self, car):
-        options = {1: car.show_status(), 2: car.turn_on(), 3: car.turn_off(),
-                   4: car.move(), 5: car.refill(), 6: car.paint()}
+        self.options = {'1': car.show_status(), '2': car.turn_on(), '3': car.turn_off(),
+                        '4': car.move(), '5': car.refill(), '6': car.paint()}
 
+    def menu(self):
         while True:
-            print('~' * 20, '\n----> Menu <----\n', '~' * 20,
-                  '\n1- Check out car status\n2- Turn engine ON\n3- Turn engine OFF\n'
-                  '4- Run\n5- Refill tank\n6- Paint it\n', '~' * 20)
+            print("""
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      ----> Menu <----
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1- Check out car status
+2- Turn engine ON
+3- Turn engine OFF
+4- Run
+5- Refill tank
+6- Paint it
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+""")
             option = input('\nWhat do you want to do with your car? --> ')
+            action = self.options.get(option)
 
-            if input in options:
-                action = options[int(option)]
+            if action:
+                action()
             else:
                 print('I\'m sorry, you need to enter one of the options (number)')
 

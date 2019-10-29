@@ -88,15 +88,12 @@ Distance: {}km
 class Manager:
     def __init__(self):
         car = Car()
-        print('Wow! What a brand new car you have there!!\n')
-        self.menu()
+        print('\nWow! What a brand new car you have there!!\n')
+        self.options = {1: car.show_status, 2: car.turn_on, 3: car.turn_off,
+                        4: car.move, 5: car.refill, 6: car.paint}
 
-        self.options = {'1': car.show_status(), '2': car.turn_on(), '3': car.turn_off(),
-                        '4': car.move(), '5': car.refill(), '6': car.paint()}
-
-    def menu(self):
-        while True:
-            print("""
+    def display_menu(self):
+        print("""
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       ----> Menu <----
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -106,11 +103,21 @@ class Manager:
 4- Run
 5- Refill tank
 6- Paint it
+
+7- Exit
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 """)
-            option = input('\nWhat do you want to do with your car? --> ')
-            action = self.options.get(option)
 
+    def run(self):
+        self.display_menu()
+
+        while True:
+            option = input('\nWhat do you want to do with your car? --> ')
+            if option == 7:
+                print('\nLeaving the car in the road, you walk towards the setting Sun...')
+                exit()
+
+            action = self.options.get(option)
             if action:
                 action()
             else:
@@ -118,4 +125,4 @@ class Manager:
 
 
 if __name__ == '__main__':
-    Manager()
+    Manager().run()

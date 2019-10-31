@@ -22,9 +22,9 @@ class Car:
         print('\nShhhhhhh... Engine is off now!')
 
     def move(self):
-        max_dist = self.tank / (self.consumption / 100)  # km
+        max_dist = (self.tank / self.consumption) / 100  # km
         while True:
-            dist = input('\nHow many km would you like to travel? --> ')
+            dist = str(input('\nHow many km would you like to travel? --> '))
             if not self.engine:
                 print('\nI am not an expert, but I think you should turn the engine on first...')
                 break

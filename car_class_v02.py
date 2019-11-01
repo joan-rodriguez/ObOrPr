@@ -31,13 +31,13 @@ class Car:
                 break
             if str(dist).isdigit():
                 if int(dist) > max_dist:
-                    self.distance += max_dist
+                    self.distance += float(max_dist)
                     self.tank -= round(max_dist * self.consumption, 2)
                     print('\nYour tank is empty. Your car just moved {}km. Total distance is {}km.'
                           .format(max_dist, self.distance))
                     break
                 else:
-                    self.distance += dist
+                    self.distance += float(dist)
                     self.tank -= round(float(dist) * self.consumption, 2)
                     print('\nYour car moved {}km! Total distance is {}km.'.format(dist,
                                                                                   self.distance))
@@ -116,12 +116,12 @@ class Manager:
         while True:
             self.display_menu()
             option = input('What do you want to do with your car? --> ')
-            if option == 7:
-                print('\nLeaving the car in the road, you walk towards the setting Sun...')
-                exit()
 
-            action = self.options.get(int(option))
-            if action:
+            if option.isdecimal() and int(option) in self.options:
+                if int(option) == 7:
+                    print('\nLeaving the car in the road, you walk towards the setting Sun...\n')
+                    exit()
+                action = self.options.get(int(option))
                 action()
             else:
                 print('I\'m sorry, you need to enter one of the options (number)')

@@ -15,11 +15,11 @@ class Car:
 
     def turn_on(self):
         self.engine = True
-        print('\nBRrrrRRRRrrrrr... Engine is on now!')
+        print('\nBRrrrRRRRrrrrr... Engine is ON now!')
 
     def turn_off(self):
         self.engine = False
-        print('\nShhhhhhh... Engine is off now!')
+        print('\nShhhhhhh... Engine is OFF now!')
 
     def move(self):
         max_dist = round(self.tank / self.consumption, 2)  # km

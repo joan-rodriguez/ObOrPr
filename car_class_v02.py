@@ -23,7 +23,7 @@ class Car:
 
     def move(self):
         max_dist = round(self.tank / self.consumption, 2)  # km
-        print('Current max dist is: {}'.format(max_dist))
+        print('Current max dist is: {:.2f}'.format(max_dist))  # {:n.mf} ; n = number of figures, m = number of decimals
         while True:
             dist = input('\nHow many km would you like to travel? --> ')
             if not self.engine:
@@ -47,31 +47,42 @@ class Car:
 
     def refill(self):
         max_liters = round(self.max_tank - self.tank, 2)
+
         while True:
             liters = input('How many liters do you want to refill? --> ')
-            if self.engine:
-                print('Hey! Don\'t fill in your tank while... KABOOOOOM!!')
-                exit()
-            if str(liters).isdigit():
-                if int(liters) > max_liters:
-                    self.tank = self.max_tank
-                    print('\nYou could only fill {}liters in your tank. Now it is full!'.format(max_liters))
-                    break
-                else:
-                    self.tank += liters
-                    break
+
+            if liters.isdigit():
+                liters = int(liters)
+                break
+
+            print('Must be a number! (you troll)')
+
+        if self.engine:
+            print('Hey! Don\'t fill in your tank while... KABOOOOOM!!')
+            exit()
+
+        if liters > max_liters:
+            self.tank = self.max_tank
+            print('\nYou could only fill {}liters in your tank. Now it is full!'.format(max_liters))
+
+        else:
+            self.tank += liters
 
     def paint(self):
         print('\nYour car\'s color is currently {}.'.format(self.color))
+
         while True:
             new_color = input('What color would you like to paint your car off? --> ')
+
             if new_color == self.color:
                 print('\nPlease... Don\'t waste my time...')
                 break
+
             elif new_color in self.possible_colors:
                 self.color = new_color
                 print('\nGreat, Sir! Now you have a {} car!'.format(self.color))
                 break
+
             else:
                 print('Oooooooh!! This color just got finished... Next week we\'ll have more'
                       ' in store. Until then...')
@@ -84,8 +95,10 @@ class Car:
 Color: {}
 Tank level: {}liters
 Distance: {}km
-=============================
-""".format(self.color, self.tank, self.distance))
+=============================""".format(
+            self.color, self.tank, self.distance
+        )
+        )
 
 
 class Manager:
@@ -115,17 +128,52 @@ class Manager:
     def run(self):
         while True:
             self.display_menu()
+
+            # See function below
+            # option = validate_input(
+            #     valid_inputs=self.options,
+            #     prompt='What do you want to do with your car? --> '
+            # )
+
             option = input('What do you want to do with your car? --> ')
 
-            if option.isdecimal() and int(option) in self.options:
-                if int(option) == 7:
+            valid_option = None
+
+            if option.isdecimal():
+                option = int(option)
+
+                if option in self.options:
+                    valid_option = True
+                    # action = self.options.get(option)
+                    # action()
+
+                    # Equivalent
+                    self.options[option]()
+
+                    input('\n<enter>\n')
+
+                elif option == 7:
                     print('\nLeaving the car in the road, you walk towards the setting Sun...\n')
                     exit()
-                action = self.options.get(int(option))
-                action()
-            else:
+
+            if not valid_option:
                 print('I\'m sorry, you need to enter one of the options (number)')
 
+
+"""
+def validate_input(valid_inputs, prompt, prompt_fail=None):
+    while True:
+        option = input(prompt)
+        
+        if option.isdigit():
+            option = int(option)
+            if option in valid_inputs:
+                return option
+        
+        if prompt_fail:
+            print(prompt_fail)
+
+"""
 
 if __name__ == '__main__':
     Manager().run()
